@@ -5,7 +5,6 @@ conn = sqlite3.connect("ifpb.db")
 cursor = conn.cursor()
 
 cursor.execute("""
-
     create table tb_escola(
         id_escola integer auto_increment primary key,
         nome varchar(45),

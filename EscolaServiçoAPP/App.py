@@ -591,5 +591,9 @@ def not_found(error=None):
 
     return resp
 
+@app.errorhandler(JsonValidationError)
+def validation_error(e):
+    return jsonify({ 'error': e.message, 'errors': [validation_error.message for validation_error  in e.errors]})
+
 if(__name__ == '__main__'):
     app.run(host='0.0.0.0', debug=True, use_reloader=True)

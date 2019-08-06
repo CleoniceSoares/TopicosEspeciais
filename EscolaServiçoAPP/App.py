@@ -63,7 +63,7 @@ curso_schema{
 
 DATABASE_NAME = "ifpb.db"
 
-# listar todas as escolas cadastradas
+# listar escolas cadastradas
 @app.route("/escolas", methods = ["GET"])
 def getEscolas():
     logger.info("Listando escolas.")
@@ -112,7 +112,7 @@ def getEscolasId(id):
     return jsonify(escola)
     logger.info("Escola listada com sucesso.")
 
-# cadastrar uma escola
+# cadastrar escola
 @app.route("/escola", methods = ["POST"])
 @schema.validate(escola_schema)
 def setEscola():
@@ -150,7 +150,7 @@ def updateEscola(id):
     cidade = escola['cidade']
 
     try:
-        # Buscar a escola pelo "id".
+        # Buscar escola pelo "id".
         conn = sqlite3.connect(DATABASE_NAME)
         cursor = conn.cursor()
 
@@ -278,7 +278,7 @@ def updateAluno(id):
     nascimento = aluno['nascimento']
 
     try:
-        # Buscar o aluno pelo "id".
+        # Buscar aluno pelo "id".
         conn = sqlite3.connect(DATABASE_NAME)
         cursor = conn.cursor()
 
@@ -316,7 +316,7 @@ def updateAluno(id):
     return jsonify(aluno)
 
 
-# listar todos os cursos
+# listar cursos
 @app.route("/cursos", methods = ["GET"])
 def getCursos():
     logger.info("Listando cursos.")
@@ -362,7 +362,7 @@ def getCursosId(id):
     return jsonify(curso)
     logger.info("Curso listado com sucesso.")
 
-# cadastrar um curso
+# cadastrar curso
 @app.route("/curso", methods = ["POST"])
 @schema.validate(curso_schema)
 def setCurso():
@@ -396,7 +396,7 @@ def updateCurso(id):
     turno = curso['turno']
 
     try:
-        # Buscar o curso pelo "id".
+        # Buscar curso pelo "id".
         conn = sqlite3.connect(DATABASE_NAME)
         cursor = conn.cursor()
 
@@ -433,7 +433,7 @@ def updateCurso(id):
     #Retornar o JSON do curso atualizado.
     return jsonify(curso)
 
-# listar todas as turmas
+# listar turmas
 @app.route("/turmas", methods = ["GET"])
 def getTurmas():
     logger.info("Listando turmas.")
@@ -479,7 +479,7 @@ def getTurmasId(id):
     return jsonify(turma)
     logger.info("Turma listada com sucesso.")
 
-# cadastrar uma turma
+# cadastrar turma
 @app.route("/turma", methods = ["POST"])
 @schema.validate(turma_schema)
 def setTurma():
@@ -515,7 +515,7 @@ def updateTurma(id):
     curso = curso['curso']
 
     try:
-        # Buscar a turma pelo "id".
+        # Buscar turma pelo "id".
         conn = sqlite3.connect(DATABASE_NAME)
         cursor = conn.cursor()
 
@@ -552,7 +552,7 @@ def updateTurma(id):
     #Retornar o JSON da turma atualizada.
     return jsonify(turma)
 
-# listar todas as disciplinas
+# listar disciplinas
 @app.route("/disciplinas", methods = ["GET"])
 def getDisciplinas():
     logger.info("Listando disciplinas.")
@@ -633,7 +633,7 @@ def updateDisciplina(id):
         conn = sqlite3.connect(DATABASE_NAME)
         cursor = conn.cursor()
 
-        # Executar a consulta de pesquisa.​​
+        # Executar consulta de pesquisa.​​
         cursor.execute("""
             SELECT * FROM tb_disciplina WHERE id_disciplina = ?;
         """, (id, ))

@@ -83,7 +83,7 @@ def getEscolas():
             }
             escolas.append(escola)
         conn.close()
-     except(sqlite3.Error):
+    except(sqlite3.Error):
          logger.error("Aconteceu um erro.")
     return jsonify(escolas)
     logger.info("Escolas listada com sucesso.")

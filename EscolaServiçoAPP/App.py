@@ -19,7 +19,7 @@ logger.setLevel(logging.INFO)
 schema = JsonSchema()
 schema.init_app(app)
 
-aluno_schema{
+aluno_schema = {
     "required": ["nome", "matricula", "cpf", "nascimento", "fk_id_endereco", "fk_id_curso"],
     "properties": {
         "nome" : {"type" : "string"},
@@ -31,7 +31,7 @@ aluno_schema{
     }
 }
 
-escola_schema{
+escola_schema = {
     "required": ["nome", "fk_id_endereco","fk_id_campus"],
     "properties": {
         "nome" : {"type" : "string"},
@@ -40,7 +40,7 @@ escola_schema{
     }
 }
 
-turma_schema{
+turma_schema = {
     "required": ["nome", "fk_id_curso"],
     "properties": {
         "nome" : {"type" : "string"},
@@ -48,7 +48,7 @@ turma_schema{
     }
 }
 
-disciplina_schema{
+disciplina_schema = {
     "required": ["nome", "fk_id_professor"],
     "properties": {
         "nome" : {"type" : "string"},
@@ -56,7 +56,7 @@ disciplina_schema{
     }
 }
 
-curso_schema{
+curso_schema = {
     "required": ["nome", "fk_id_turno"],
     "properties": {
         "nome" : {"type" : "string"},
@@ -64,7 +64,8 @@ curso_schema{
     }
 }
 
-endereco_schema{
+endereco_schema = {
+
     "required": ["logradouro", "complemento", "bairro", "cep", "numero"],
     "properties": {
         "logradouro" : {"type" : "string"},
@@ -75,7 +76,7 @@ endereco_schema{
     }
 }
 
-professor_schema{
+professor_schema = {
     "required": ["nome", "fk_id_endereco"],
     "properties": {
         "nome" : {"type" : "string"},
@@ -83,7 +84,7 @@ professor_schema{
     }
 }
 
-campus_schema{
+campus_schema = {
     "required": ["sigla", "cidade"],
     "properties": {
         "sigla" : {"type" : "string"},
@@ -91,16 +92,248 @@ campus_schema{
     }
 }
 
-turno_schema{
+turno_schema = {
     "required": ["nome"],
     "properties": {
         "nome" : {"type" : "string"}
     }
 }
 
-
-
 DATABASE_NAME = "EscolaApp_versao2.db"
+
+# listar professores
+@app.route("/professores",  methods = ["GET"])
+def getProfessores():
+    logger.info("Listando professores.")
+    try:
+        conn = sqlite3.connect(DATABASE_NAME)
+        cursor = conn.cursor()
+        cursor.execute("""
+            select * from tb_professor;
+        """)
+        professores = []
+        for linha in cursor.fetchall():
+            professor = {
+                "id" : linha[0],
+                "nome" : linha[1],
+                "fk_id_endereco" : linha[2]
+            }
+            professores.append(professor)
+        conn.close()
+    except(sqlite3.Error):
+         logger.error("Aconteceu um erro.")
+    return jsonify(professores)
+    logger.info("Professores listados com sucesso.")
+
+# listar professor pelo id
+@app.route("/professores/<int:id>", methods = ["GET"])
+def getProfessoresId(id):
+    logger.info("Listando professor.")
+    try:
+        conn = sqlite3.connect(DATABASE_NAME)
+        cursor = conn.cursor()
+        cursor.execute("""
+            select * from tb_professor where id_professor = ?;
+        """, (id, ))
+
+        linha = cursor.fetchone()
+        professor = {
+            "id" : linha[0],
+            "nome" : linha[1],
+            "fk_id_endereco" : linha[2]
+        }
+        conn.close()
+    except(sqlite3.Error):
+        logger.error("Aconteceu um erro.")
+    return jsonify(endereco)
+    logger.info("Professor listado com sucesso.")
+
+# cadastrar professor
+@app.route("/professor", methods = ["POST"])
+@schema.validate(professor_schema)
+def setProfessor():
+    logger.info("Cadastrando professor.")
+    professor = request.get_json()
+    nome = professor["nome"]
+    fk_id_endereco = professor["fk_id_endereco"]
+    try:
+        conn = sqlite3.connect(DATABASE_NAME)
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            insert into tb_professor(nome, fk_id_endereco)
+            values(?,?);
+        """, (nome, fk_id_endereco))
+        conn.commit()
+        conn.close()
+
+        id = cursor.lastrowid
+        professor["id"] = id
+    except(sqlite3.Error):
+        logger.error("Aconteceu um erro.")
+    return jsonify(professor)
+    logger.info("Professor cadastrado com sucesso.")
+
+# update professor
+@app.route("/professor/<int:id>", methods=['PUT'])
+@schema.validate(professor_schema)
+def updateProfessor(id):
+    # Receber o JSON.
+    professor = request.get_json()
+    nome = professor["nome"]
+    fk_id_endereco = professor["fk_id_endereco"]
+    try:
+        # Buscar professor pelo "id".
+        conn = sqlite3.connect(DATABASE_NAME)
+        cursor = conn.cursor()
+
+        # Executar a consulta de pesquisa.​​
+        cursor.execute("""
+            SELECT * FROM tb_professor WHERE id_professor = ?;
+        """, (id, ))
+
+        data = cursor.fetchone()
+
+        if data is not None:
+            # Atualizar os dados caso o professor seja encontrado através do "id".
+            cursor.execute("""
+                UPDATE tb_professor
+                SET nome=?, fk_id_endereco=?
+                WHERE tb_endereco = ?;
+            """, (nome, fk_id_endereco, id))
+            conn.commit()
+        else:
+            logger.info("Inserindo.")
+            # Inserir novo registro.
+            cursor.execute("""
+                INSERT INTO tb_endereco(nome, fk_id_endereco)
+                VALUES(?, ?);
+            """, (nome, fk_id_endereco))
+            conn.commit()
+            # Identificador do último registro inserido.
+            id = cursor.lastrowid
+            professor["id"] = id
+
+        conn.close()
+    except(sqlite3.Error):
+        logger.error("Aconteceu um erro.")
+    #Retornar o JSON do professor atualizado.
+    return jsonify(professor)
+
+# listar turno
+@app.route("/turnos",  methods = ["GET"])
+def getTurnos():
+    logger.info("Listando turnos.")
+    try:
+        conn = sqlite3.connect(DATABASE_NAME)
+        cursor = conn.cursor()
+        cursor.execute("""
+            select * from tb_turno;
+        """)
+        turnos = []
+        for linha in cursor.fetchall():
+            turno = {
+                "id" : linha[0],
+                "nome" : linha[1]
+            }
+            turnos.append(turno)
+        conn.close()
+    except(sqlite3.Error):
+         logger.error("Aconteceu um erro.")
+    return jsonify(enderecos)
+    logger.info("Turnos listados com sucesso.")
+
+# listar turno pelo id
+@app.route("/turnos/<int:id>", methods = ["GET"])
+def getTurnoID(id):
+    logger.info("Listando turno.")
+    try:
+        conn = sqlite3.connect(DATABASE_NAME)
+        cursor = conn.cursor()
+        cursor.execute("""
+            select * from tb_turno where id_turno = ?;
+        """, (id, ))
+
+        linha = cursor.fetchone()
+        endereco = {
+            "id" : linha[0],
+            "nome" : linha[1]
+        }
+        conn.close()
+    except(sqlite3.Error):
+        logger.error("Aconteceu um erro.")
+    return jsonify(turno)
+    logger.info("Turno listado com sucesso.")
+
+# cadastrar turno
+@app.route("/turno", methods = ["POST"])
+@schema.validate(turno_schema)
+def setTurno():
+    logger.info("Cadastrando turno.")
+    turno = request.get_json()
+    nome = endereco["nome"]
+    try:
+        conn = sqlite3.connect(DATABASE_NAME)
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            insert into tb_turno(nome)
+            values(?);
+        """, (nome, ))
+        conn.commit()
+        conn.close()
+
+        id = cursor.lastrowid
+        turno["id"] = id
+    except(sqlite3.Error):
+        logger.error("Aconteceu um erro.")
+    return jsonify(endereco)
+    logger.info("Turno cadastrado com sucesso.")
+
+# update turno
+@app.route("/turno/<int:id>", methods=['PUT'])
+@schema.validate(turno_schema)
+def updateTurno(id):
+    # Receber o JSON.
+    turno = request.get_json()
+    nome = endereco["nome"]
+    try:
+        # Buscar turno pelo "id".
+        conn = sqlite3.connect(DATABASE_NAME)
+        cursor = conn.cursor()
+
+        # Executar a consulta de pesquisa.​​
+        cursor.execute("""
+            SELECT * FROM tb_turno WHERE id_turno = ?;
+        """, (id, ))
+
+        data = cursor.fetchone()
+
+        if data is not None:
+            # Atualizar os dados caso o turno seja encontrado através do "id".
+            cursor.execute("""
+                UPDATE tb_endereco
+                SET nome=?
+                WHERE tb_endereco = ?;
+            """, (nome, id))
+            conn.commit()
+        else:
+            logger.info("Inserindo.")
+            # Inserir novo registro.
+            cursor.execute("""
+                INSERT INTO tb_turno(nome)
+                VALUES(?);
+            """, (nome, ))
+            conn.commit()
+            # Identificador do último registro inserido.
+            id = cursor.lastrowid
+            turno["id"] = id
+
+        conn.close()
+    except(sqlite3.Error):
+        logger.error("Aconteceu um erro.")
+    #Retornar o JSON do turno atualizado.
+    return jsonify(turno)
 
 # listar endereços
 @app.route("/enderecos",  methods = ["GET"])
@@ -465,7 +698,7 @@ def updateEscola(id):
             cursor.execute("""
                 INSERT INTO tb_escola(nome, fk_id_endereco, fk_id_campus)
                 VALUES(?, ?, ?);
-            """, nome, fk_id_endereco, fk_id_campus))
+            """, (nome, fk_id_endereco, fk_id_campus))
             conn.commit()
             # Identificador do último registro inserido.
             id = cursor.lastrowid
@@ -837,6 +1070,7 @@ def updateTurma(id):
                 VALUES(?, ?);
             """, (nome, fk_id_curso))
             conn.commit()
+
             # Identificador do último registro inserido.
             id = cursor.lastrowid
             aluno["id"] = id
@@ -861,7 +1095,8 @@ def getDisciplinas():
         for linha in cursor.fetchall():
             disciplina = {
                 "id" : linha[0],
-                "nome" : linha[1]
+                "nome" : linha[1],
+                "fk_id_professor" : linha[2]
             }
             disciplinas.append(disciplina)
         conn.close()
@@ -884,7 +1119,8 @@ def getDisciplinasId(id):
         linha = cursor.fetchone()
         disciplina = {
             "id" : linha[0],
-            "nome" : linha[1]
+            "nome" : linha[1],
+            "fk_id_professor" : linha[2]
         }
         conn.close()
     except(sqlite3.Error):
@@ -902,10 +1138,11 @@ def setDisciplina():
         conn = sqlite3.connect(DATABASE_NAME)
         cursor = conn.cursor()
         nome = disciplina["nome"]
+        fk_id_professor = disciplina["fk_id_professor"]
         cursor.execute("""
-            insert into tb_disciplina(nome)
+            insert into tb_disciplina(nome, fk_id_professor)
             values(?);
-        """, (nome, ))
+        """, (nome, fk_id_professor))
         conn.commit()
         conn.close()
         id = cursor.lastrowid
@@ -921,7 +1158,8 @@ def setDisciplina():
 def updateDisciplina(id):
     # Receber o JSON.
     disciplina = request.get_json()
-    nome = disciplina['nome']
+    nome = disciplina["nome"]
+    fk_id_professor = disciplina["fk_id_professor"]
 
     try:
         # Buscar a turma pelo "id".
@@ -939,17 +1177,17 @@ def updateDisciplina(id):
             # Atualizar os dados caso a disciplina seja encontrada através do "id".
             cursor.execute("""
                 UPDATE tb_disciplina
-                SET nome=?
+                SET nome=?, fk_id_professor=?
                 WHERE id_disciplina = ?;
-            """, (nome, id))
+            """, (nome, fk_id_professor, id))
             conn.commit()
         else:
             logger.info("Inserindo")
             # Inserir novo registro.
             cursor.execute("""
-                INSERT INTO tb_disciplina(nome)
+                INSERT INTO tb_disciplina(nome, fk_id_professor)
                 VALUES(?, ?);
-            """, (nome))
+            """, (nome, fk_id_professor))
             conn.commit()
             # Identificador do último registro inserido.
             id = cursor.lastrowid
@@ -959,7 +1197,7 @@ def updateDisciplina(id):
     except(sqlite3.Error):
         logger.error("Aconteceu um erro.")
     #Retornar o JSON da disciplina atualizada.
-    return jsonify(turma)
+    return jsonify(disciplina)
 
 def dict_factory(linha, cursor):
     dicionario = {}

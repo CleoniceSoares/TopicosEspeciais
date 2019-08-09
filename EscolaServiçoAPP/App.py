@@ -145,7 +145,7 @@ def getProfessoresId(id):
         conn.close()
     except(sqlite3.Error):
         logger.error("Aconteceu um erro.")
-    return jsonify(endereco)
+    return jsonify(professor)
     logger.info("Professor listado com sucesso.")
 
 # cadastrar professor
@@ -153,12 +153,12 @@ def getProfessoresId(id):
 @schema.validate(professor_schema)
 def setProfessor():
     logger.info("Cadastrando professor.")
-    professor = request.get_json()
-    nome = professor["nome"]
-    fk_id_endereco = professor["fk_id_endereco"]
     try:
         conn = sqlite3.connect(DATABASE_NAME)
         cursor = conn.cursor()
+        professor = request.get_json()
+        nome = professor["nome"]
+        fk_id_endereco = professor["fk_id_endereco"]
 
         cursor.execute("""
             insert into tb_professor(nome, fk_id_endereco)
@@ -240,7 +240,7 @@ def getTurnos():
         conn.close()
     except(sqlite3.Error):
          logger.error("Aconteceu um erro.")
-    return jsonify(enderecos)
+    return jsonify(turnos)
     logger.info("Turnos listados com sucesso.")
 
 # listar turno pelo id
@@ -255,7 +255,7 @@ def getTurnoID(id):
         """, (id, ))
 
         linha = cursor.fetchone()
-        endereco = {
+        turno = {
             "id" : linha[0],
             "nome" : linha[1]
         }
@@ -271,7 +271,7 @@ def getTurnoID(id):
 def setTurno():
     logger.info("Cadastrando turno.")
     turno = request.get_json()
-    nome = endereco["nome"]
+    nome = turno["nome"]
     try:
         conn = sqlite3.connect(DATABASE_NAME)
         cursor = conn.cursor()
@@ -287,7 +287,7 @@ def setTurno():
         turno["id"] = id
     except(sqlite3.Error):
         logger.error("Aconteceu um erro.")
-    return jsonify(endereco)
+    return jsonify(turno)
     logger.info("Turno cadastrado com sucesso.")
 
 # update turno
@@ -296,7 +296,7 @@ def setTurno():
 def updateTurno(id):
     # Receber o JSON.
     turno = request.get_json()
-    nome = endereco["nome"]
+    nome = turno["nome"]
     try:
         # Buscar turno pelo "id".
         conn = sqlite3.connect(DATABASE_NAME)
@@ -312,9 +312,9 @@ def updateTurno(id):
         if data is not None:
             # Atualizar os dados caso o turno seja encontrado através do "id".
             cursor.execute("""
-                UPDATE tb_endereco
+                UPDATE tb_turno
                 SET nome=?
-                WHERE tb_endereco = ?;
+                WHERE id_turno = ?;
             """, (nome, id))
             conn.commit()
         else:
@@ -526,7 +526,7 @@ def setCampus():
         cursor = conn.cursor()
 
         cursor.execute("""
-            insert into tb_escola(sigla, cidade)
+            insert into tb_campus(sigla, cidade)
             values(?,?);
         """, (sigla, cidade))
         conn.commit()
@@ -1040,7 +1040,9 @@ def setTurma():
 @schema.validate(turma_schema)
 def updateTurma(id):
     # Receber o JSON.
-
+    turma = request.get_json()
+    nome = turma["nome"]
+    fk_id_curso = turma["fk_id_curso"]
 
     try:
         # Buscar turma pelo "id".
@@ -1133,15 +1135,15 @@ def getDisciplinasId(id):
 @schema.validate(disciplina_schema)
 def setDisciplina():
     logger.info("Cadastrando disciplina.")
-    disciplina = request.get_json()
     try:
         conn = sqlite3.connect(DATABASE_NAME)
         cursor = conn.cursor()
+        disciplina = request.get_json()
         nome = disciplina["nome"]
         fk_id_professor = disciplina["fk_id_professor"]
         cursor.execute("""
             insert into tb_disciplina(nome, fk_id_professor)
-            values(?);
+            values(?,?);
         """, (nome, fk_id_professor))
         conn.commit()
         conn.close()

@@ -1,3 +1,94 @@
-2019-07-20 16:49:06,400 - INFO - Cadastrando escola.
-2019-07-20 16:54:04,227 - INFO - Cadastrando aluno..
-2019-07-20 17:33:36,594 - INFO - Cadastrando aluno..
+2019-08-09 10:11:37,961 - INFO - Cadastrando endereco.
+2019-08-09 10:12:04,321 - INFO - Cadastrando campi.
+2019-08-09 10:12:04,322 - ERROR - Aconteceu um erro.
+2019-08-09 10:12:45,105 - INFO - Cadastrando curso.
+2019-08-09 10:15:01,696 - INFO - Cadastrando turno.
+2019-08-09 10:15:30,939 - INFO - Cadastrando turno.
+2019-08-09 10:15:58,350 - INFO - Cadastrando turno.
+2019-08-09 10:16:27,927 - INFO - Cadastrando professor.
+2019-08-09 10:16:51,456 - INFO - Cadastrando disciplina.
+2019-08-09 10:16:51,457 - ERROR - Aconteceu um erro.
+2019-08-09 10:17:01,447 - INFO - Cadastrando turma.
+2019-08-09 10:17:06,189 - INFO - Cadastrando curso.
+2019-08-09 10:17:10,185 - INFO - Cadastrando aluno...
+2019-08-09 10:17:47,615 - INFO - Cadastrando escola.
+2019-08-09 10:18:01,800 - INFO - Listando disciplina.
+2019-08-09 10:21:31,014 - INFO - Cadastrando campi.
+2019-08-09 10:21:31,015 - ERROR - Aconteceu um erro.
+2019-08-09 10:22:31,343 - INFO - Cadastrando campi.
+2019-08-09 10:22:31,344 - ERROR - Aconteceu um erro.
+2019-08-09 10:24:40,704 - INFO - Cadastrando campi.
+2019-08-09 10:24:40,705 - ERROR - Aconteceu um erro.
+2019-08-09 10:25:20,308 - INFO - Cadastrando disciplina.
+2019-08-09 10:25:20,308 - ERROR - Aconteceu um erro.
+2019-08-09 10:25:41,796 - INFO - Cadastrando disciplina.
+2019-08-09 10:25:41,797 - ERROR - Aconteceu um erro.
+2019-08-09 10:27:39,515 - INFO - Cadastrando disciplina.
+2019-08-09 10:27:39,516 - ERROR - Aconteceu um erro.
+2019-08-09 10:29:31,042 - INFO - Cadastrando disciplina.
+2019-08-09 10:29:31,043 - ERROR - Aconteceu um erro.
+2019-08-09 10:32:19,165 - INFO - Cadastrando disciplina.
+2019-08-09 10:34:16,039 - INFO - Cadastrando campi.
+2019-08-09 10:34:16,040 - ERROR - Aconteceu um erro.
+2019-08-09 10:34:59,328 - INFO - Cadastrando campi.
+2019-08-09 10:41:02,218 - ERROR - Aconteceu um erro.
+2019-08-09 10:42:39,754 - INFO - Listando disciplina.
+2019-08-09 10:42:45,146 - INFO - Listando disciplinas.
+2019-08-09 10:42:50,442 - INFO - Listando turma.
+2019-08-09 10:42:53,243 - INFO - Listando turmas.
+2019-08-09 10:42:58,263 - INFO - Listando curso.
+2019-08-09 10:43:00,736 - INFO - Listando cursos.
+2019-08-09 10:43:32,017 - INFO - Listando aluno.
+2019-08-09 10:43:37,671 - INFO - Listando alunos.
+2019-08-09 10:43:41,494 - INFO - Listando escola.
+2019-08-09 10:43:44,848 - INFO - Listando escolas.
+2019-08-09 10:43:52,651 - INFO - Listando campi.
+2019-08-09 10:43:55,327 - INFO - Listando campi.
+2019-08-09 10:44:00,513 - INFO - Listando endereço.
+2019-08-09 10:44:04,989 - INFO - Listando endereços.
+2019-08-09 10:44:36,212 - INFO - Listando turno.
+2019-08-09 10:45:27,028 - INFO - Listando turno.
+2019-08-09 10:45:34,272 - INFO - Listando turno.
+2019-08-09 10:45:47,001 - INFO - Listando turnos.
+2019-08-09 10:46:10,817 - INFO - Listando turnos.
+2019-08-09 10:46:16,488 - INFO - Listando professor.
+2019-08-09 10:47:09,687 - INFO - Listando professor.
+2019-08-09 10:47:14,094 - INFO - Listando professores.
+2019-08-09 10:47:30,176 - ERROR - Aconteceu um erro.
+2019-08-09 10:48:41,783 - ERROR - Aconteceu um erro.
+2019-08-09 12:34:13,341 - INFO - Cadastrando disciplina.
+2019-08-09 12:34:18,114 - INFO - Listando disciplina.
+2019-08-09 12:34:22,816 - INFO - Listando disciplinas.
+2019-08-09 12:34:33,273 - INFO - Listando disciplina.
+2019-08-09 12:35:17,931 - INFO - Cadastrando turma.
+2019-08-09 12:35:32,805 - INFO - Listando turma.
+2019-08-09 12:35:36,758 - INFO - Listando turma.
+2019-08-09 12:35:40,918 - INFO - Listando turmas.
+2019-08-09 12:36:38,269 - INFO - Cadastrando curso.
+2019-08-09 12:36:49,462 - INFO - Listando curso.
+2019-08-09 12:36:52,386 - INFO - Listando cursos.
+2019-08-09 12:38:05,814 - INFO - Cadastrando aluno...
+2019-08-09 12:38:08,978 - INFO - Listando aluno.
+2019-08-09 12:38:14,469 - INFO - Listando aluno.
+2019-08-09 12:38:20,341 - INFO - Listando aluno.
+2019-08-09 12:38:23,270 - INFO - Listando alunos.
+2019-08-09 12:39:31,403 - ERROR - Aconteceu um erro.
+2019-08-09 12:40:08,443 - ERROR - Aconteceu um erro.
+2019-08-09 12:42:55,807 - INFO - Cadastrando escola.
+2019-08-09 12:43:03,864 - INFO - Listando escola.
+2019-08-09 12:43:07,251 - INFO - Listando escolas.
+2019-08-09 12:43:42,151 - INFO - Cadastrando campi.
+2019-08-09 12:43:53,206 - INFO - Listando campi.
+2019-08-09 12:43:55,772 - INFO - Listando campi.
+2019-08-09 12:45:01,524 - ERROR - Aconteceu um erro.
+2019-08-09 12:47:08,843 - INFO - Listando endereço.
+2019-08-09 12:47:13,242 - INFO - Listando endereços.
+2019-08-09 12:47:31,736 - ERROR - Aconteceu um erro.
+2019-08-09 12:49:38,072 - INFO - Listando turno.
+2019-08-09 12:49:42,581 - INFO - Listando turno.
+2019-08-09 12:49:44,977 - INFO - Listando turnos.
+2019-08-09 12:49:49,340 - INFO - Listando professor.
+2019-08-09 12:49:59,532 - INFO - Listando professores.
+2019-08-09 12:50:28,225 - INFO - Cadastrando endereco.
+2019-08-09 12:50:42,290 - INFO - Cadastrando turno.
+2019-08-09 12:51:06,320 - INFO - Cadastrando professor.

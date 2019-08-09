@@ -199,7 +199,7 @@ def updateProfessor(id):
             cursor.execute("""
                 UPDATE tb_professor
                 SET nome=?, fk_id_endereco=?
-                WHERE tb_endereco = ?;
+                WHERE id_professor = ?;
             """, (nome, fk_id_endereco, id))
             conn.commit()
         else:
@@ -445,7 +445,7 @@ def updateEndereco(id):
             cursor.execute("""
                 UPDATE tb_endereco
                 SET logradouro=?, complemento=?, bairro=?, cep=?, numero=?
-                WHERE tb_endereco = ?;
+                WHERE idtb_endereco = ?;
             """, (logradouro, complemento, bairro, cep, numero, id))
             conn.commit()
         else:
@@ -679,7 +679,7 @@ def updateEscola(id):
 
         # Executar a consulta de pesquisa.​​
         cursor.execute("""
-            SELECT * FROM tb_escola WHERE id_escola ?;
+            SELECT * FROM tb_escola WHERE id_escola = ?;
         """, (id, ))
 
         data = cursor.fetchone()

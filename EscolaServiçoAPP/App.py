@@ -165,12 +165,14 @@ def setProfessor():
             values(?,?);
         """, (nome, fk_id_endereco))
         conn.commit()
-        conn.close()
-
         id = cursor.lastrowid
         professor["id"] = id
-    except(sqlite3.Error):
+    except(sqlite3.Error, Exception) as e:
         logger.error("Aconteceu um erro.")
+        logger.error("Exceção: %s" % e)
+    finally:
+        if conn:
+            conn.close()
     return jsonify(professor)
     logger.info("Professor cadastrado com sucesso.")
 
@@ -213,10 +215,12 @@ def updateProfessor(id):
             # Identificador do último registro inserido.
             id = cursor.lastrowid
             professor["id"] = id
-
-        conn.close()
-    except(sqlite3.Error):
+    except(sqlite3.Error, Exception) as e:
         logger.error("Aconteceu um erro.")
+        logger.error("Exceção: %s" % e)
+    finally:
+        if conn:
+            conn.close()
     #Retornar o JSON do professor atualizado.
     return jsonify(professor)
 
@@ -281,12 +285,14 @@ def setTurno():
             values(?);
         """, (nome, ))
         conn.commit()
-        conn.close()
-
         id = cursor.lastrowid
         turno["id"] = id
-    except(sqlite3.Error):
+    except(sqlite3.Error, Exception) as e:
         logger.error("Aconteceu um erro.")
+        logger.error("Exceção: %s" % e)
+    finally:
+        if conn:
+            conn.close()
     return jsonify(turno)
     logger.info("Turno cadastrado com sucesso.")
 
@@ -328,10 +334,12 @@ def updateTurno(id):
             # Identificador do último registro inserido.
             id = cursor.lastrowid
             turno["id"] = id
-
-        conn.close()
-    except(sqlite3.Error):
+    except(sqlite3.Error, Exception) as e:
         logger.error("Aconteceu um erro.")
+        logger.error("Exceção: %s" % e)
+    finally:
+        if conn:
+            conn.close()
     #Retornar o JSON do turno atualizado.
     return jsonify(turno)
 
@@ -408,12 +416,14 @@ def setEndereco():
             values(?,?,?,?,?);
         """, (logradouro, complemento, bairro, cep, numero))
         conn.commit()
-        conn.close()
-
         id = cursor.lastrowid
         endereco["id"] = id
-    except(sqlite3.Error):
+    except(sqlite3.Error, Exception) as e:
         logger.error("Aconteceu um erro.")
+        logger.error("Exceção: %s" % e)
+    finally:
+        if conn:
+            conn.close()
     return jsonify(endereco)
     logger.info("Endereço cadastrado com sucesso.")
 
@@ -459,10 +469,12 @@ def updateEndereco(id):
             # Identificador do último registro inserido.
             id = cursor.lastrowid
             endereco["id"] = id
-
-        conn.close()
-    except(sqlite3.Error):
+    except(sqlite3.Error, Exception) as e:
         logger.error("Aconteceu um erro.")
+        logger.error("Exceção: %s" % e)
+    finally:
+        if conn:
+            conn.close()
     #Retornar o JSON do endereço atualizado.
     return jsonify(endereco)
 
@@ -530,12 +542,14 @@ def setCampus():
             values(?,?);
         """, (sigla, cidade))
         conn.commit()
-        conn.close()
-
         id = cursor.lastrowid
         campi["id"] = id
-    except(sqlite3.Error):
+    except(sqlite3.Error, Exception) as e:
         logger.error("Aconteceu um erro.")
+        logger.error("Exceção: %s" % e)
+    finally:
+        if conn:
+            conn.close()
     return jsonify(campi)
     logger.info("Campi cadastrado com sucesso.")
 
@@ -579,10 +593,12 @@ def updateCampus(id):
             # Identificador do último registro inserido.
             id = cursor.lastrowid
             escola["id"] = id
-
-        conn.close()
-    except(sqlite3.Error):
+    except(sqlite3.Error, Exception) as e:
         logger.error("Aconteceu um erro.")
+        logger.error("Exceção: %s" % e)
+    finally:
+        if conn:
+            conn.close()
     #Retornar o JSON da escola atualizada.
     return jsonify(campi)
 
@@ -653,12 +669,14 @@ def setEscola():
             values(?,?,?);
         """, (nome, fk_id_endereco, fk_id_campus))
         conn.commit()
-        conn.close()
-
         id = cursor.lastrowid
         escola["id"] = id
-    except(sqlite3.Error):
+    except(sqlite3.Error, Exception) as e:
         logger.error("Aconteceu um erro.")
+        logger.error("Exceção: %s" % e)
+    finally:
+        if conn:
+            conn.close()
     return jsonify(escola)
     logger.info("Escola cadastrada com sucesso.")
 
@@ -703,10 +721,12 @@ def updateEscola(id):
             # Identificador do último registro inserido.
             id = cursor.lastrowid
             escola["id"] = id
-
-        conn.close()
-    except(sqlite3.Error):
+    except(sqlite3.Error, Exception) as e:
         logger.error("Aconteceu um erro.")
+        logger.error("Exceção: %s" % e)
+    finally:
+        if conn:
+            conn.close()
     #Retornar o JSON da escola atualizada.
     return jsonify(escola)
 
@@ -786,11 +806,14 @@ def setAluno():
             values(?,?,?,?,?,?);
         """, (nome, matricula, cpf, nascimento, fk_id_endereco, fk_id_curso))
         conn.commit()
-        conn.close()
         id = cursor.lastrowid
         aluno["id"] = id
-    except(sqlite3.Error):
+    except(sqlite3.Error, Exception) as e:
         logger.error("Aconteceu um erro.")
+        logger.error("Exceção: %s" % e)
+    finally:
+        if conn:
+            conn.close()
     return jsonify(aluno)
     logger.info("Aluno Cadastrado com sucesso.")
 
@@ -838,10 +861,12 @@ def updateAluno(id):
             # Identificador do último registro inserido.
             id = cursor.lastrowid
             aluno["id"] = id
-
-        conn.close()
-    except(sqlite3.Error):
+    except(sqlite3.Error, Exception) as e:
         logger.error("Aconteceu um erro.")
+        logger.error("Exceção: %s" % e)
+    finally:
+        if conn:
+            conn.close()
     #Retornar o JSON do aluno atualizado.
     return jsonify(aluno)
 
@@ -908,11 +933,14 @@ def setCurso():
             values(?,?);
         """, (nome, fk_id_turno))
         conn.commit()
-        conn.close()
         id = cursor.lastrowid
         curso["id"] = id
-    except(sqlite3.Error):
+    except(sqlite3.Error, Exception) as e:
         logger.error("Aconteceu um erro.")
+        logger.error("Exceção: %s" % e)
+    finally:
+        if conn:
+            conn.close()
     return jsonify(curso)
     logger.info("Curso cadastrado com sucesso.")
 
@@ -956,10 +984,12 @@ def updateCurso(id):
             # Identificador do último registro inserido.
             id = cursor.lastrowid
             curso["id"] = id
-
-        conn.close()
-    except(sqlite3.Error):
+    except(sqlite3.Error, Exception) as e:
         logger.error("Aconteceu um erro.")
+        logger.error("Exceção: %s" % e)
+    finally:
+        if conn:
+            conn.close()
     #Retornar o JSON do curso atualizado.
     return jsonify(curso)
 
@@ -1026,12 +1056,14 @@ def setTurma():
             values(?,?);
         """, (nome, fk_id_curso))
         conn.commit()
-        conn.close()
-
         id = cursor.lastrowid
         turma["id"] = id
-    except(sqlite3.Error):
+    except(sqlite3.Error, Exception) as e:
         logger.error("Aconteceu um erro.")
+        logger.error("Exceção: %s" % e)
+    finally:
+        if conn:
+            conn.close()
     return jsonify(turma)
     logger.info("Turma cadastrada com sucesso.")
 
@@ -1076,10 +1108,12 @@ def updateTurma(id):
             # Identificador do último registro inserido.
             id = cursor.lastrowid
             aluno["id"] = id
-
-        conn.close()
-    except(sqlite3.Error):
+    except(sqlite3.Error, Exception) as e:
         logger.error("Aconteceu um erro.")
+        logger.error("Exceção: %s" % e)
+    finally:
+        if conn:
+            conn.close()
     #Retornar o JSON da turma atualizada.
     return jsonify(turma)
 
@@ -1146,11 +1180,14 @@ def setDisciplina():
             values(?,?);
         """, (nome, fk_id_professor))
         conn.commit()
-        conn.close()
         id = cursor.lastrowid
         disciplina["id"] = id
-    except(sqlite3.Error):
+    except(sqlite3.Error, Exception) as e:
         logger.error("Aconteceu um erro.")
+        logger.error("Exceção: %s" % e)
+    finally:
+        if conn:
+            conn.close()
     return jsonify(disciplina)
     logger.info("Disciplina cadastrada com sucesso.")
 
@@ -1194,10 +1231,12 @@ def updateDisciplina(id):
             # Identificador do último registro inserido.
             id = cursor.lastrowid
             aluno["id"] = id
-
-        conn.close()
-    except(sqlite3.Error):
+    except(sqlite3.Error, Exception) as e:
         logger.error("Aconteceu um erro.")
+        logger.error("Exceção: %s" % e)
+    finally:
+        if conn:
+            conn.close()
     #Retornar o JSON da disciplina atualizada.
     return jsonify(disciplina)
 

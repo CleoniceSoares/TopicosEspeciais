@@ -1,0 +1,9 @@
+body {
+  font-family: arial, verdana, helvetica, sans-serif;
+}
+
+.container{
+  margin: 0 auto;
+  border: 1px solid red;
+  width: 700px;
+}

@@ -3,7 +3,6 @@
   margin: 0;
   background: Brown;
   border: 2px solid black;
-
   display: flex;
   flex-direction: row-reverse;
 }

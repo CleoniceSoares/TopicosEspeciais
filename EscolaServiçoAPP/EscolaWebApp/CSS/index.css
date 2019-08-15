@@ -48,29 +48,12 @@ footer {
     padding: 2px 0px;
 }
 
+#ifpb img{
+    width: 80px;
+    float: center;
+    padding: 2px 0px;
+}
+
 .wrapper {
   padding: 0;
-}
-
-
-
-.content{
-  width: 100%;
-  height: 300px;
-  background-color: #4aa
-}
-
-input[type="text"]{
-  margin: 10px;
-  width: 50px;
-}
-
-@media screen and (min-width: 481px) {
-	.content{
-      background-color: #473
-    }
-
-    input[type="text"]{
-      width: 200px;
-    }
 }

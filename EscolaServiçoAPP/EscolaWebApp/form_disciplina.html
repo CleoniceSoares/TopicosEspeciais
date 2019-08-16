@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>EscolaWebApp</title>
+    <title>Cadastrar Disciplina</title>
     <link rel="stylesheet" type="text/css" href="CSS/index.css">
     <link rel="stylesheet" type="text/css" href="CSS/menu.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -11,7 +11,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </head>
   <body>
-    <p style="background-image:url('IMAGEM/escola.jpg');">
     <div class="meu-container">
       <header>
         <!-- Logo -->
@@ -35,7 +34,9 @@
         </nav>
       </header>
       <main>
-
+        <p>
+          <b> <u>Cadastrar Disciplina</u> </b>
+        </p>
         <form action="http://localhost:5000/form_disciplina" method='POST'>
           <div class="form-group">
             <label for= 'Nome'> Nome:</label>
@@ -49,9 +50,11 @@
         </form>
       </main>
       <footer>
+        <div id="ifpb">
+            <img src="Imagem/ifpb.png" />
+        </div>
         Copyright © Todos os direitos reservados.
       </footer>
     </div>
-
   </body>
 </html>

@@ -122,8 +122,8 @@ def getProfessores():
         conn.close()
     except(sqlite3.Error):
          logger.error("Aconteceu um erro.")
-    return jsonify(professores)
     logger.info("Professores listados com sucesso.")
+    return jsonify(professores)
 
 # listar professor pelo id
 @app.route("/professores/<int:id>", methods = ["GET"])
@@ -145,8 +145,8 @@ def getProfessoresId(id):
         conn.close()
     except(sqlite3.Error):
         logger.error("Aconteceu um erro.")
-    return jsonify(professor)
     logger.info("Professor listado com sucesso.")
+    return jsonify(professor)
 
 # cadastrar professor
 @app.route("/professor", methods = ["POST"])
@@ -173,8 +173,9 @@ def setProfessor():
     finally:
         if conn:
             conn.close()
-    return jsonify(professor)
     logger.info("Professor cadastrado com sucesso.")
+    return jsonify(professor)
+
 
 # update professor
 @app.route("/professor/<int:id>", methods=['PUT'])
@@ -221,6 +222,7 @@ def updateProfessor(id):
     finally:
         if conn:
             conn.close()
+    logger.info("Update realizadao com sucesso.")
     #Retornar o JSON do professor atualizado.
     return jsonify(professor)
 
@@ -244,8 +246,9 @@ def getTurnos():
         conn.close()
     except(sqlite3.Error):
          logger.error("Aconteceu um erro.")
-    return jsonify(turnos)
     logger.info("Turnos listados com sucesso.")
+    return jsonify(turnos)
+
 
 # listar turno pelo id
 @app.route("/turnos/<int:id>", methods = ["GET"])
@@ -266,8 +269,8 @@ def getTurnoID(id):
         conn.close()
     except(sqlite3.Error):
         logger.error("Aconteceu um erro.")
-    return jsonify(turno)
     logger.info("Turno listado com sucesso.")
+    return jsonify(turno)
 
 # cadastrar turno
 @app.route("/turno", methods = ["POST"])
@@ -293,8 +296,8 @@ def setTurno():
     finally:
         if conn:
             conn.close()
-    return jsonify(turno)
     logger.info("Turno cadastrado com sucesso.")
+    return jsonify(turno)
 
 # update turno
 @app.route("/turno/<int:id>", methods=['PUT'])
@@ -340,6 +343,7 @@ def updateTurno(id):
     finally:
         if conn:
             conn.close()
+    logger.info("Update realizado com sucesso.")
     #Retornar o JSON do turno atualizado.
     return jsonify(turno)
 
@@ -367,8 +371,8 @@ def getEnderecos():
         conn.close()
     except(sqlite3.Error):
          logger.error("Aconteceu um erro.")
-    return jsonify(enderecos)
     logger.info("Endereços listados com sucesso.")
+    return jsonify(enderecos)
 
 # listar endereço pelo id
 @app.route("/enderecos/<int:id>", methods = ["GET"])
@@ -393,8 +397,8 @@ def getEnderecoId(id):
         conn.close()
     except(sqlite3.Error):
         logger.error("Aconteceu um erro.")
-    return jsonify(endereco)
     logger.info("Endereço listado com sucesso.")
+    return jsonify(endereco)
 
 # cadastrar endereço
 @app.route("/endereco", methods = ["POST"])
@@ -424,8 +428,8 @@ def setEndereco():
     finally:
         if conn:
             conn.close()
-    return jsonify(endereco)
     logger.info("Endereço cadastrado com sucesso.")
+    return jsonify(endereco)
 
 # update endereco
 @app.route("/endereco/<int:id>", methods=['PUT'])
@@ -475,6 +479,7 @@ def updateEndereco(id):
     finally:
         if conn:
             conn.close()
+    logger.info("Update realizado com sucesso.")
     #Retornar o JSON do endereço atualizado.
     return jsonify(endereco)
 
@@ -499,8 +504,8 @@ def getCampi():
         conn.close()
     except(sqlite3.Error):
          logger.error("Aconteceu um erro.")
-    return jsonify(campus)
     logger.info("Campus listados com sucesso.")
+    return jsonify(campus)
 
 # listar campi pelo id
 @app.route("/campi/<int:id>", methods = ["GET"])
@@ -522,8 +527,8 @@ def getCampiId(id):
         conn.close()
     except(sqlite3.Error):
         logger.error("Aconteceu um erro.")
-    return jsonify(campi)
     logger.info("Campi listado com sucesso.")
+    return jsonify(campi)
 
 # cadastrar campus
 @app.route("/campus", methods = ["POST"])
@@ -550,8 +555,8 @@ def setCampus():
     finally:
         if conn:
             conn.close()
-    return jsonify(campi)
     logger.info("Campi cadastrado com sucesso.")
+    return jsonify(campi)
 
 # update campus
 @app.route("/campus/<int:id>", methods=['PUT'])
@@ -599,6 +604,7 @@ def updateCampus(id):
     finally:
         if conn:
             conn.close()
+    logger.info("Update realizado com sucesso.")
     #Retornar o JSON da escola atualizada.
     return jsonify(campi)
 
@@ -624,8 +630,8 @@ def getEscolas():
         conn.close()
     except(sqlite3.Error):
          logger.error("Aconteceu um erro.")
+    logger.info("Escolas listadas com sucesso.")
     return jsonify(escolas)
-    logger.info("Escolas listada com sucesso.")
 
 # listar escola pelo id
 @app.route("/escolas/<int:id>", methods = ["GET"])
@@ -648,8 +654,8 @@ def getEscolasId(id):
         conn.close()
     except(sqlite3.Error):
         logger.error("Aconteceu um erro.")
-    return jsonify(escola)
     logger.info("Escola listada com sucesso.")
+    return jsonify(escola)
 
 # cadastrar escola
 @app.route("/escola", methods = ["POST"])
@@ -677,8 +683,8 @@ def setEscola():
     finally:
         if conn:
             conn.close()
-    return jsonify(escola)
     logger.info("Escola cadastrada com sucesso.")
+    return jsonify(escola)
 
 # update escola
 @app.route("/escola/<int:id>", methods=['PUT'])
@@ -727,6 +733,7 @@ def updateEscola(id):
     finally:
         if conn:
             conn.close()
+    logger.info("Update realizado com sucesso.")
     #Retornar o JSON da escola atualizada.
     return jsonify(escola)
 
@@ -755,8 +762,8 @@ def getAlunos():
         conn.close()
     except(sqlite3.Error):
         logger.error("Aconteceu um erro.")
-    return jsonify(alunos)
     logger.info("Alunos listado com sucesso.")
+    return jsonify(alunos)
 
 # listar aluno pelo id
 @app.route("/alunos/<int:id>", methods = ["GET"])
@@ -783,8 +790,8 @@ def getAlunosId(id):
         conn.close()
     except(sqlite3.Error):
         logger.error("Aconteceu um erro.")
-    return jsonify(aluno)
     logger.info("Aluno listado com sucesso.")
+    return jsonify(aluno)
 
 # cadastrar aluno
 @app.route("/aluno", methods = ["POST"])
@@ -814,8 +821,8 @@ def setAluno():
     finally:
         if conn:
             conn.close()
-    return jsonify(aluno)
     logger.info("Aluno Cadastrado com sucesso.")
+    return jsonify(aluno)
 
 # update aluno
 @app.route("/aluno/<int:id>", methods=['PUT'])
@@ -867,9 +874,9 @@ def updateAluno(id):
     finally:
         if conn:
             conn.close()
+    logger.info("Update realizado com sucesso.")
     #Retornar o JSON do aluno atualizado.
     return jsonify(aluno)
-
 
 # listar cursos
 @app.route("/cursos", methods = ["GET"])
@@ -892,8 +899,8 @@ def getCursos():
         conn.close()
     except(sqlite3.Error):
         logger.error("Aconteceu um erro.")
-    return jsonify(cursos)
     logger.info("Cursos listados com sucesso.")
+    return jsonify(cursos)
 
 # listar curso pelo id
 @app.route("/cursos/<int:id>", methods = ["GET"])
@@ -914,8 +921,8 @@ def getCursosId(id):
         conn.close()
     except(sqlite3.Error):
         logger.error("Aconteceu um erro.")
-    return jsonify(curso)
     logger.info("Curso listado com sucesso.")
+    return jsonify(curso)
 
 # cadastrar curso
 @app.route("/curso", methods = ["POST"])
@@ -941,8 +948,8 @@ def setCurso():
     finally:
         if conn:
             conn.close()
-    return jsonify(curso)
     logger.info("Curso cadastrado com sucesso.")
+    return jsonify(curso)
 
 # update curso
 @app.route("/curso/<int:id>", methods=['PUT'])
@@ -990,6 +997,7 @@ def updateCurso(id):
     finally:
         if conn:
             conn.close()
+    logger.info("Update realizado com sucesso.")
     #Retornar o JSON do curso atualizado.
     return jsonify(curso)
 
@@ -1014,8 +1022,8 @@ def getTurmas():
         conn.close()
     except(sqlite3.Error):
         logger.error("Aconteceu um erro.")
-    return jsonify(turmas)
     logger.info("Turmas listadas com sucesso.")
+    return jsonify(turmas)
 
 # listar turma pelo id
 @app.route("/turmas/<int:id>", methods = ["GET"])
@@ -1036,8 +1044,8 @@ def getTurmasId(id):
         conn.close()
     except(sqlite3.Error):
         logger.error("Aconteceu um erro.")
-    return jsonify(turma)
     logger.info("Turma listada com sucesso.")
+    return jsonify(turma)
 
 # cadastrar turma
 @app.route("/turma", methods = ["POST"])
@@ -1064,8 +1072,8 @@ def setTurma():
     finally:
         if conn:
             conn.close()
-    return jsonify(turma)
     logger.info("Turma cadastrada com sucesso.")
+    return jsonify(turma)
 
 # update turma
 @app.route("/turma/<int:id>", methods=['PUT'])
@@ -1114,6 +1122,7 @@ def updateTurma(id):
     finally:
         if conn:
             conn.close()
+    logger.info("Update realizado com sucesso.")
     #Retornar o JSON da turma atualizada.
     return jsonify(turma)
 
@@ -1138,8 +1147,8 @@ def getDisciplinas():
         conn.close()
     except(sqlite3.Error):
         logger.error("Aconteceu um erro.")
-    return jsonify(disciplinas)
     logger.info("Disciplinas listadas com sucesso.")
+    return jsonify(disciplinas)
 
 # listar disciplina pelo id
 @app.route("/disciplinas/<int:id>", methods = ["GET"])
@@ -1161,8 +1170,8 @@ def getDisciplinasId(id):
         conn.close()
     except(sqlite3.Error):
         logger.error("Aconteceu um erro.")
-    return jsonify(disciplina)
     logger.info("Disciplina listada com sucesso.")
+    return jsonify(disciplina)
 
 # cadastrar disciplina
 @app.route("/disciplina", methods = ["POST"])
@@ -1188,8 +1197,8 @@ def setDisciplina():
     finally:
         if conn:
             conn.close()
-    return jsonify(disciplina)
     logger.info("Disciplina cadastrada com sucesso.")
+    return jsonify(disciplina)
 
 # update disciplina
 @app.route("/disciplina/<int:id>", methods=['PUT'])
@@ -1237,6 +1246,7 @@ def updateDisciplina(id):
     finally:
         if conn:
             conn.close()
+    logger.info("Update realizado com sucesso.")
     #Retornar o JSON da disciplina atualizada.
     return jsonify(disciplina)
 

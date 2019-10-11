@@ -40,7 +40,7 @@
           </ul>
         </nav>
       </header>
-      <main ng-controller="MeuPrimeiroController">
+      <main ng-controller="HomeController">
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active">
@@ -65,16 +65,12 @@
             <span class="sr-only">Next</span>
           </a>
         </div>
-        <input type="text" ng-model="logradouro" name="logradouro">
-        <h1>Meu logradouro é {{logradouro}}</h1>
-
-        <input type="number" ng-model="numero1">
-        <input type="number" ng-model="numero2">
-
-        <button ng-click="somar(numero1, numero2)">Somar</button>
-
-        <h2>{{resultado}}</h2>
-
+        <div class="form-group">
+          <label for= 'nome'> Nome: </label>
+          <input type="text" name="nome" class="form-control" ng-model="nome">
+        </div>
+        <button ng-click="desejarBoasVindas()" class="btn btn-dark btn-lg btn-block">Exibir</button>
+        <h1>{{mensagem}}</h1>
       </main>
       <footer>
         <div id="ifpb">

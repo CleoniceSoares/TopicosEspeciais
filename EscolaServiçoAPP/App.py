@@ -1,7 +1,9 @@
+# importações
 from flask import Flask
 from flask import request
 from flask import jsonify
 from flask_json_schema import JsonSchema, JsonValidationError
+from flask_cors import CORS
 import logging
 import sqlite3
 
@@ -1271,6 +1273,8 @@ def not_found(error=None):
 @app.errorhandler(JsonValidationError)
 def validation_error(e):
     return jsonify({ 'error': e.message, 'errors': [validation_error.message for validation_error  in e.errors]})
+
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 if(__name__ == '__main__'):
     app.run(host='0.0.0.0', debug=True, use_reloader=True)

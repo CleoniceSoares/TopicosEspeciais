@@ -22,47 +22,47 @@ schema = JsonSchema()
 schema.init_app(app)
 
 aluno_schema = {
-    "required": ["nome", "matricula", "cpf", "nascimento", "fk_id_endereco", "fk_id_curso"],
+    "required": ["nome", "matricula", "cpf", "nascimento", "id_endereco", "id_curso"],
     "properties": {
         "nome" : {"type" : "string"},
         "matricula" : {"type" : "string"},
         "cpf" : {"type" : "string"},
         "nascimento" : {"type" : "string"},
-        "fk_id_endereco": {"type" : "integer"},
-        "fk_id_curso" : {"type" : "integer"}
+        "id_endereco": {"type" : "integer"},
+        "id_curso" : {"type" : "integer"}
     }
 }
 
 escola_schema = {
-    "required": ["nome", "fk_id_endereco","fk_id_campus"],
+    "required": ["nome", "id_endereco","id_campus"],
     "properties": {
         "nome" : {"type" : "string"},
-        "fk_id_endereco" : {"type" : "integer"},
-        "fk_id_campus" : {"type" : "integer"}
+        "id_endereco" : {"type" : "integer"},
+        "id_campus" : {"type" : "integer"}
     }
 }
 
 turma_schema = {
-    "required": ["nome", "fk_id_curso"],
+    "required": ["nome", "id_curso"],
     "properties": {
         "nome" : {"type" : "string"},
-        "fk_id_curso" : {"type" : "integer"}
+        "id_curso" : {"type" : "integer"}
     }
 }
 
 disciplina_schema = {
-    "required": ["nome", "fk_id_professor"],
+    "required": ["nome", "id_professor"],
     "properties": {
         "nome" : {"type" : "string"},
-        "fk_id_professor" : {"type" : "integer"}
+        "id_professor" : {"type" : "integer"}
     }
 }
 
 curso_schema = {
-    "required": ["nome", "fk_id_turno"],
+    "required": ["nome", "id_turno"],
     "properties": {
         "nome" : {"type" : "string"},
-        "fk_id_turno" : {"type" : "integer"}
+        "id_turno" : {"type" : "integer"}
     }
 }
 
@@ -79,10 +79,10 @@ endereco_schema = {
 }
 
 professor_schema = {
-    "required": ["nome", "fk_id_endereco"],
+    "required": ["nome", "id_endereco"],
     "properties": {
         "nome" : {"type" : "string"},
-        "fk_id_endereco" : {"type" : "integer"}
+        "id_endereco" : {"type" : "integer"}
     }
 }
 
@@ -118,7 +118,7 @@ def getProfessores():
             professor = {
                 "id" : linha[0],
                 "nome" : linha[1],
-                "fk_id_endereco" : linha[2]
+                "id_endereco" : linha[2]
             }
             professores.append(professor)
         conn.close()
@@ -142,7 +142,7 @@ def getProfessoresId(id):
         professor = {
             "id" : linha[0],
             "nome" : linha[1],
-            "fk_id_endereco" : linha[2]
+            "id_endereco" : linha[2]
         }
         conn.close()
     except(sqlite3.Error):
@@ -160,12 +160,12 @@ def setProfessor():
         cursor = conn.cursor()
         professor = request.get_json()
         nome = professor["nome"]
-        fk_id_endereco = professor["fk_id_endereco"]
+        id_endereco = professor["id_endereco"]
 
         cursor.execute("""
-            insert into tb_professor(nome, fk_id_endereco)
+            insert into tb_professor(nome, id_endereco)
             values(?,?);
-        """, (nome, fk_id_endereco))
+        """, (nome, id_endereco))
         conn.commit()
         id = cursor.lastrowid
         professor["id"] = id
@@ -186,7 +186,7 @@ def updateProfessor(id):
     # Receber o JSON.
     professor = request.get_json()
     nome = professor["nome"]
-    fk_id_endereco = professor["fk_id_endereco"]
+    id_endereco = professor["id_endereco"]
     try:
         # Buscar professor pelo "id".
         conn = sqlite3.connect(DATABASE_NAME)
@@ -203,17 +203,17 @@ def updateProfessor(id):
             # Atualizar os dados caso o professor seja encontrado através do "id".
             cursor.execute("""
                 UPDATE tb_professor
-                SET nome=?, fk_id_endereco=?
+                SET nome=?, id_endereco=?
                 WHERE id_professor = ?;
-            """, (nome, fk_id_endereco, id))
+            """, (nome, id_endereco, id))
             conn.commit()
         else:
             logger.info("Inserindo.")
             # Inserir novo registro.
             cursor.execute("""
-                INSERT INTO tb_endereco(nome, fk_id_endereco)
+                INSERT INTO tb_endereco(nome, id_endereco)
                 VALUES(?, ?);
-            """, (nome, fk_id_endereco))
+            """, (nome, id_endereco))
             conn.commit()
             # Identificador do último registro inserido.
             id = cursor.lastrowid
@@ -625,8 +625,8 @@ def getEscolas():
             escola = {
                 "id" : linha[0],
                 "nome" : linha[1],
-                "fk_id_endereco" : linha[2],
-                "fk_id_campus" : linha[3]
+                "id_endereco" : linha[2],
+                "id_campus" : linha[3]
             }
             escolas.append(escola)
         conn.close()
@@ -650,8 +650,8 @@ def getEscolasId(id):
         escola = {
             "id" : linha[0],
             "nome" : linha[1],
-            "fk_id_endereco" : linha[2],
-            "fk_id_campus" : linha[3]
+            "id_endereco" : linha[2],
+            "id_campus" : linha[3]
         }
         conn.close()
     except(sqlite3.Error):
@@ -666,16 +666,16 @@ def setEscola():
     logger.info("Cadastrando escola.")
     escola = request.get_json()
     nome = escola["nome"]
-    fk_id_endereco = escola["fk_id_endereco"]
-    fk_id_campus = escola["fk_id_campus"]
+    id_endereco = escola["id_endereco"]
+    id_campus = escola["id_campus"]
     try:
         conn = sqlite3.connect(DATABASE_NAME)
         cursor = conn.cursor()
 
         cursor.execute("""
-            insert into tb_escola(nome, fk_id_endereco, fk_id_campus)
+            insert into tb_escola(nome, id_endereco, id_campus)
             values(?,?,?);
-        """, (nome, fk_id_endereco, fk_id_campus))
+        """, (nome, id_endereco, id_campus))
         conn.commit()
         id = cursor.lastrowid
         escola["id"] = id
@@ -695,8 +695,8 @@ def updateEscola(id):
     # Receber o JSON.
     escola = request.get_json()
     nome = escola["nome"]
-    fk_id_endereco = escola["fk_id_endereco"]
-    fk_id_campus = escola["fk_id_campus"]
+    id_endereco = escola["id_endereco"]
+    id_campus = escola["id_campus"]
 
     try:
         # Buscar escola pelo "id".
@@ -714,17 +714,17 @@ def updateEscola(id):
             # Atualizar os dados caso a escola seja encontrada através do "id".
             cursor.execute("""
                 UPDATE tb_escola
-                SET nome=?, fk_id_endereco=?, fk_id_campus=?
+                SET nome=?, id_endereco=?, id_campus=?
                 WHERE id_escola = ?;
-            """, (nome, fk_id_endereco, fk_id_campus, id))
+            """, (nome, id_endereco, id_campus, id))
             conn.commit()
         else:
             logger.info("Inserindo.")
             # Inserir novo registro.
             cursor.execute("""
-                INSERT INTO tb_escola(nome, fk_id_endereco, fk_id_campus)
+                INSERT INTO tb_escola(nome, id_endereco, id_campus)
                 VALUES(?, ?, ?);
-            """, (nome, fk_id_endereco, fk_id_campus))
+            """, (nome, id_endereco, id_campus))
             conn.commit()
             # Identificador do último registro inserido.
             id = cursor.lastrowid
@@ -757,8 +757,8 @@ def getAlunos():
                 "matricula" : linha[2],
                 "cpf" : linha[3],
                 "nascimento" : linha[4],
-                "fk_id_endereco" : linha[4],
-                "fk_id_curso" : linha[5]
+                "id_endereco" : linha[4],
+                "id_curso" : linha[5]
             }
             alunos.append(aluno)
         conn.close()
@@ -785,8 +785,8 @@ def getAlunosId(id):
             "matricula" : linha[2],
             "cpf" : linha[3],
             "nascimento" : linha[4],
-            "fk_id_endereco" : linha[4],
-            "fk_id_curso" : linha[5]
+            "id_endereco" : linha[4],
+            "id_curso" : linha[5]
         }
 
         conn.close()
@@ -805,15 +805,15 @@ def setAluno():
     matricula = aluno["matricula"]
     cpf = aluno["cpf"]
     nascimento = aluno["nascimento"]
-    fk_id_endereco = aluno["fk_id_endereco"]
-    fk_id_curso = aluno["fk_id_curso"]
+    id_endereco = aluno["id_endereco"]
+    id_curso = aluno["id_curso"]
     try:
         conn = sqlite3.connect(DATABASE_NAME)
         cursor = conn.cursor()
         cursor.execute("""
-            insert into tb_aluno(nome, matricula, cpf, nascimento, fk_id_endereco, fk_id_curso)
+            insert into tb_aluno(nome, matricula, cpf, nascimento, id_endereco, id_curso)
             values(?,?,?,?,?,?);
-        """, (nome, matricula, cpf, nascimento, fk_id_endereco, fk_id_curso))
+        """, (nome, matricula, cpf, nascimento, id_endereco, id_curso))
         conn.commit()
         id = cursor.lastrowid
         aluno["id"] = id
@@ -836,8 +836,8 @@ def updateAluno(id):
     matricula = aluno["matricula"]
     cpf = aluno["cpf"]
     nascimento = aluno["nascimento"]
-    fk_id_endereco = aluno["fk_id_endereco"]
-    fk_id_curso = aluno["fk_id_curso"]
+    id_endereco = aluno["id_endereco"]
+    id_curso = aluno["id_curso"]
 
     try:
         # Buscar aluno pelo "id".
@@ -855,17 +855,17 @@ def updateAluno(id):
             # Atualizar os dados caso o aluno seja encontrado através do "id".
             cursor.execute("""
                 UPDATE tb_aluno
-                SET nome=?, matricula=?, cpf=?, nascimento=?, fk_id_endereco=?, fk_id_curso=?
+                SET nome=?, matricula=?, cpf=?, nascimento=?, id_endereco=?, id_curso=?
                 WHERE id_aluno = ?;
-            """, (nome, matricula, cpf, nascimento, fk_id_endereco, fk_id_curso, id))
+            """, (nome, matricula, cpf, nascimento, id_endereco, id_curso, id))
             conn.commit()
         else:
             logger.info("Inserindo")
             # Inserir novo registro.
             cursor.execute("""
-                INSERT INTO tb_aluno(nome, matricula, cpf, nascimento, fk_id_endereco, fk_id_curso)
+                INSERT INTO tb_aluno(nome, matricula, cpf, nascimento, id_endereco, id_curso)
                 VALUES(?, ?, ?, ?, ?, ?);
-            """, (nome, matricula, cpf, nascimento, fk_id_endereco, fk_id_curso))
+            """, (nome, matricula, cpf, nascimento, id_endereco, id_curso))
             conn.commit()
             # Identificador do último registro inserido.
             id = cursor.lastrowid
@@ -895,7 +895,7 @@ def getCursos():
             curso = {
                 "id" : linha[0],
                 "nome" : linha[1],
-                "fk_id_turno" : linha[2]
+                "id_turno" : linha[2]
             }
             cursos.append(curso)
         conn.close()
@@ -918,7 +918,7 @@ def getCursosId(id):
         curso = {
             "id" : linha[0],
             "nome" : linha[1],
-            "fk_id_turno" : linha[2]
+            "id_turno" : linha[2]
         }
         conn.close()
     except(sqlite3.Error):
@@ -933,14 +933,14 @@ def setCurso():
     logger.info("Cadastrando curso.")
     curso = request.get_json()
     nome = curso["nome"]
-    fk_id_turno = curso["fk_id_turno"]
+    id_turno = curso["id_turno"]
     try:
         conn = sqlite3.connect(DATABASE_NAME)
         cursor = conn.cursor()
         cursor.execute("""
-            insert into tb_curso(nome, fk_id_turno)
+            insert into tb_curso(nome, id_turno)
             values(?,?);
-        """, (nome, fk_id_turno))
+        """, (nome, id_turno))
         conn.commit()
         id = cursor.lastrowid
         curso["id"] = id
@@ -960,7 +960,7 @@ def updateCurso(id):
     # Receber o JSON.
     curso = request.get_json()
     nome = curso["nome"]
-    fk_id_turno = curso["fk_id_turno"]
+    id_turno = curso["id_turno"]
 
     try:
         # Buscar curso pelo "id".
@@ -978,17 +978,17 @@ def updateCurso(id):
             # Atualizar os dados caso o curso seja encontrado através do "id".
             cursor.execute("""
                 UPDATE tb_curso
-                SET nome=?, fk_id_turno=?
+                SET nome=?, id_turno=?
                 WHERE id_curso = ?;
-            """, (nome,fk_id_turno, id))
+            """, (nome,id_turno, id))
             conn.commit()
         else:
             logger.info("Inserindo")
             # Inserir novo registro.
             cursor.execute("""
-                INSERT INTO tb_curso(nome, fk_id_turno)
+                INSERT INTO tb_curso(nome, id_turno)
                 VALUES(?, ?);
-            """, (nome, fk_id_turno))
+            """, (nome, id_turno))
             conn.commit()
             # Identificador do último registro inserido.
             id = cursor.lastrowid
@@ -1018,7 +1018,7 @@ def getTurmas():
             turma = {
                 "id" : linha[0],
                 "nome" : linha[1],
-                "fk_id_curso" : linha[2]
+                "id_curso" : linha[2]
             }
             turmas.append(turma)
         conn.close()
@@ -1041,7 +1041,7 @@ def getTurmasId(id):
         turma = {
             "id" : linha[0],
             "nome" : linha[1],
-            "fk_id_curso" : linha[2]
+            "id_curso" : linha[2]
         }
         conn.close()
     except(sqlite3.Error):
@@ -1059,12 +1059,12 @@ def setTurma():
         cursor = conn.cursor()
         turma = request.get_json()
         nome = turma["nome"]
-        fk_id_curso = turma["fk_id_curso"]
+        id_curso = turma["id_curso"]
         cursor = conn.cursor()
         cursor.execute("""
-            insert into tb_turma(nome, fk_id_curso)
+            insert into tb_turma(nome, id_curso)
             values(?,?);
-        """, (nome, fk_id_curso))
+        """, (nome, id_curso))
         conn.commit()
         id = cursor.lastrowid
         turma["id"] = id
@@ -1084,7 +1084,7 @@ def updateTurma(id):
     # Receber o JSON.
     turma = request.get_json()
     nome = turma["nome"]
-    fk_id_curso = turma["fk_id_curso"]
+    id_curso = turma["id_curso"]
 
     try:
         # Buscar turma pelo "id".
@@ -1102,17 +1102,17 @@ def updateTurma(id):
             # Atualizar os dados caso a turma seja encontrada através do "id".
             cursor.execute("""
                 UPDATE tb_turma
-                SET nome=?, fk_id_curso=?
+                SET nome=?, id_curso=?
                 WHERE id_turma = ?;
-            """, (nome, fk_id_curso, id))
+            """, (nome, id_curso, id))
             conn.commit()
         else:
             logger.info("Inserindo")
             # Inserir novo registro.
             cursor.execute("""
-                INSERT INTO tb_turma(nome, fk_id_curso)
+                INSERT INTO tb_turma(nome, id_curso)
                 VALUES(?, ?);
-            """, (nome, fk_id_curso))
+            """, (nome, id_curso))
             conn.commit()
 
             # Identificador do último registro inserido.
@@ -1143,7 +1143,7 @@ def getDisciplinas():
             disciplina = {
                 "id" : linha[0],
                 "nome" : linha[1],
-                "fk_id_professor" : linha[2]
+                "id_professor" : linha[2]
             }
             disciplinas.append(disciplina)
         conn.close()
@@ -1167,7 +1167,7 @@ def getDisciplinasId(id):
         disciplina = {
             "id" : linha[0],
             "nome" : linha[1],
-            "fk_id_professor" : linha[2]
+            "id_professor" : linha[2]
         }
         conn.close()
     except(sqlite3.Error):
@@ -1185,11 +1185,11 @@ def setDisciplina():
         cursor = conn.cursor()
         disciplina = request.get_json()
         nome = disciplina["nome"]
-        fk_id_professor = disciplina["fk_id_professor"]
+        id_professor = disciplina["id_professor"]
         cursor.execute("""
-            insert into tb_disciplina(nome, fk_id_professor)
+            insert into tb_disciplina(nome, id_professor)
             values(?,?);
-        """, (nome, fk_id_professor))
+        """, (nome, id_professor))
         conn.commit()
         id = cursor.lastrowid
         disciplina["id"] = id
@@ -1209,7 +1209,7 @@ def updateDisciplina(id):
     # Receber o JSON.
     disciplina = request.get_json()
     nome = disciplina["nome"]
-    fk_id_professor = disciplina["fk_id_professor"]
+    id_professor = disciplina["id_professor"]
 
     try:
         # Buscar a turma pelo "id".
@@ -1227,17 +1227,17 @@ def updateDisciplina(id):
             # Atualizar os dados caso a disciplina seja encontrada através do "id".
             cursor.execute("""
                 UPDATE tb_disciplina
-                SET nome=?, fk_id_professor=?
+                SET nome=?, id_professor=?
                 WHERE id_disciplina = ?;
-            """, (nome, fk_id_professor, id))
+            """, (nome, id_professor, id))
             conn.commit()
         else:
             logger.info("Inserindo")
             # Inserir novo registro.
             cursor.execute("""
-                INSERT INTO tb_disciplina(nome, fk_id_professor)
+                INSERT INTO tb_disciplina(nome, id_professor)
                 VALUES(?, ?);
-            """, (nome, fk_id_professor))
+            """, (nome, id_professor))
             conn.commit()
             # Identificador do último registro inserido.
             id = cursor.lastrowid
